@@ -12,7 +12,7 @@ import (
 	"strings"
 )
 
-type configMap struct {
+type ConfigMap struct {
 	value map[string]string
 	configPath string
 }
@@ -22,19 +22,24 @@ var (
 )
 
 // Set a key, value to map.
-func (c *configMap) Set(k string, v string) {
-	if c.value[k] == "" {
+func (c *ConfigMap) Set(k string, v string) {
+	if c.value[k] == "" && k != "" {
 		c.value[k] = v
 	}
 }
 
-// Get value from configMap by key.
-func (c *configMap) Get(k string) string {
+// Get value from ConfigMap by key.
+func (c *ConfigMap) Get(k string) string {
 	return c.value[k]
 }
 
+// Return config map.
+func (c *ConfigMap) GetAll() map[string]string {
+	return c.value
+}
+
 // Store data to local file.
-func (c *configMap) Store() {
+func (c *ConfigMap) Store() {
 	var bf bytes.Buffer
 	for k, v := range c.value {
 		if k != "" {
@@ -45,34 +50,31 @@ func (c *configMap) Store() {
 		}
 	}
 
-	cwd := utils.GetCwd()
-	path := filepath.Join(cwd, DefaultConfPath)
-	c.configPath = path
 	// Clear exist confit file befor store it.
-	utils.CleanTmp(path)
+	utils.CleanTmp(c.configPath)
 	// Store data to local file.
-	if e := ioutil.WriteFile(path, []byte(bf), 0777); e != nil {
+	if e := ioutil.WriteFile(c.configPath, []byte(bf.String()), 0777); e != nil {
 		log.Fatal(e)
 	}
 }
 
 // Clear the map,
 // just clear the object， not the config file content.
-func (c *configMap) Clear() {
+func (c *ConfigMap) Clear() {
 	for k, _ := range c.value {
 		delete(c.value, k)
 	}
 }
 
 // Refresh config map data.
-// Get newer data to configMap
-func (c *configMap) Refresh() {
+// Get newer data to ConfigMap
+func (c *ConfigMap) Refresh() {
 	// TODO: other process.
 	c.readConfig()
 }
 
 // Read config file to struct
-func (c *configMap) readConfig() {
+func (c *ConfigMap) readConfig() {
 	path := c.configPath
 	fi, err := os.Open(filepath.Join(path))
 	utils.ErrHadle(err)
@@ -93,4 +95,22 @@ func (c *configMap) readConfig() {
 			c.value[cmds[0]] = strings.Join(cmds[1:], " ")
 		}
 	}
+}
+
+// Initial the config path.
+func (c *ConfigMap) Init(path string) {
+	if path == "" {
+		cwd := utils.GetCwd()
+		path = filepath.Join(cwd, DefaultConfPath)
+	}
+
+	c.configPath = path
+}
+
+// Export config map.
+func InitConfig(path string) ConfigMap{
+	c := ConfigMap{}
+	c.value = map[string]string{}
+	c.Init(path)
+	return c
 }
