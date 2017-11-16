@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# linux 64bit
+GOOS=linux GOARCH=amd64 go build -o webhook_linux64bit
+
+# linux 32bit
+GOOS=linux GOARCH=386 go build -o webhook_linux32bit
+
+# windows 64bit
+GOOS=windows GOARCH=amd64 go build -o webhook_64bit.exe
+
+# windows 32bit
+GOOS=windows GOARCH=386 go build -o webhook_32bit.exe
+
+# Mac OS X 64bit
+GOOS=darwin GOARCH=amd64 go build -o webhook_mac
