@@ -2,18 +2,18 @@ package config
 
 import (
 	"../utils"
-	"path/filepath"
+	"bufio"
 	"bytes"
+	"io"
 	"io/ioutil"
 	"log"
 	"os"
-	"bufio"
-	"io"
+	"path/filepath"
 	"strings"
 )
 
 type ConfigMap struct {
-	value map[string]string
+	value      map[string]string
 	configPath string
 }
 
@@ -108,7 +108,7 @@ func (c *ConfigMap) Init(path string) {
 }
 
 // Export config map.
-func InitConfig(path string) ConfigMap{
+func InitConfig(path string) ConfigMap {
 	c := ConfigMap{}
 	c.value = map[string]string{}
 	c.Init(path)

@@ -1,17 +1,17 @@
 package main
 
 import (
-	"net/http"
-	"flag"
 	"./config"
+	"flag"
 	"io"
+	"net/http"
 	"regexp"
 	"strings"
 )
 
 const (
 	defaultConfPath = ".executor.conf"
-	defaultPort = ":8910"
+	defaultPort     = ":8910"
 )
 
 func main() {
@@ -56,5 +56,3 @@ func router(c config.ConfigMap) {
 func exec(cmd string) {
 
 }
-
-

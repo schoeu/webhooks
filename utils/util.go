@@ -1,8 +1,8 @@
 package utils
 
 import (
-	"os"
 	"log"
+	"os"
 )
 
 // get run time cwd
