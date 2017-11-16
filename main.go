@@ -2,11 +2,15 @@ package main
 
 import (
 	"./config"
+	"./utils"
 	"flag"
+	"fmt"
 	"io"
+	"io/ioutil"
+	"log"
 	"net/http"
+	"os/exec"
 	"regexp"
-	"strings"
 )
 
 const (
@@ -25,16 +29,16 @@ func main() {
 
 	// Get config instance.
 	c := config.InitConfig(filePath)
-
-	cmds := strings.Split(command, " ")
-	if len(cmds) > 0 && cmds[0] != "" {
-		c.Set(cmds[0], strings.Join(cmds[1:], " "))
+	cmd, para, vild := utils.ValidCmd(command)
+	if vild {
+		c.Set(cmd, para)
 	}
 
 	router(c)
 	http.ListenAndServe(defaultPort, nil)
 }
 
+// Router for actions.
 func router(c config.ConfigMap) {
 	urlReg := regexp.MustCompile("/tasks/(\\w+)$")
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
@@ -47,12 +51,30 @@ func router(c config.ConfigMap) {
 
 		for k, v := range c.GetAll() {
 			if k == action {
+				execCmd(v)
 				io.WriteString(w, v)
 			}
 		}
 	})
 }
 
-func exec(cmd string) {
+// Exec command.
+func execCmd(in string) {
+	c, para, _ := utils.ValidCmd(in)
+	cmd := exec.Command(c, para)
+	stderr, err := cmd.StderrPipe()
+	if err != nil {
+		log.Fatal(err)
+	}
 
+	if err := cmd.Start(); err != nil {
+		log.Fatal(err)
+	}
+
+	slurp, _ := ioutil.ReadAll(stderr)
+	fmt.Printf("%s\n", slurp)
+
+	if err := cmd.Wait(); err != nil {
+		log.Fatal(err)
+	}
 }
