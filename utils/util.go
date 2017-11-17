@@ -54,6 +54,11 @@ func Analysis(s string) (string, string) {
 	return cmds[0], cmds[1]
 }
 
+func RunCmdAnalysis(s string) (string, string) {
+	cmds := strings.Split(s, " ")
+	return cmds[0], strings.Join(cmds[1:], " ")
+}
+
 func CmdFilter(c string) string {
 	rs := strings.Replace(c, "sh ", "", -1)
 	return rs
