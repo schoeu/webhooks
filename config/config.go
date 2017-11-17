@@ -90,9 +90,9 @@ func (c *ConfigMap) readConfig() {
 			break
 		}
 		content := string(a)
-		cmds := strings.Split(content, " ")
-		if len(cmds) > 2 {
-			c.value[cmds[0]] = strings.Join(cmds[1:], " ")
+		cmds := strings.Split(content, ":")
+		if len(cmds) > 1 {
+			c.value[cmds[0]] = cmds[1]
 		}
 	}
 }
@@ -105,6 +105,7 @@ func (c *ConfigMap) Init(path string) {
 	}
 
 	c.configPath = path
+	c.readConfig()
 }
 
 // Export config map.
