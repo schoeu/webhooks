@@ -46,7 +46,7 @@ func (c *ConfigMap) Store() {
 	for k, v := range c.value {
 		if k != "" {
 			bf.WriteString(k)
-			bf.WriteString(" ")
+			bf.WriteString(":")
 			bf.WriteString(v)
 			bf.WriteString("\n")
 		}
