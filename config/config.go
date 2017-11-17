@@ -5,7 +5,6 @@ import (
 	"bufio"
 	"bytes"
 	"io"
-	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
@@ -26,6 +25,8 @@ func (c *ConfigMap) Set(k string, v string) {
 	if c.value[k] == "" && k != "" {
 		c.value[k] = v
 	}
+	// Store data to file when change the data.
+	c.Store()
 }
 
 // Get value from ConfigMap by key.
@@ -35,6 +36,7 @@ func (c *ConfigMap) Get(k string) string {
 
 // Return config map.
 func (c *ConfigMap) GetAll() map[string]string {
+	c.readConfig()
 	return c.value
 }
 
@@ -51,11 +53,12 @@ func (c *ConfigMap) Store() {
 	}
 
 	// Clear exist confit file befor store it.
-	utils.CleanTmp(c.configPath)
+	// utils.CleanTmp(c.configPath)
 	// Store data to local file.
-	if e := ioutil.WriteFile(c.configPath, []byte(bf.String()), 0777); e != nil {
-		log.Fatal(e)
-	}
+	fi, err := os.OpenFile(c.configPath, os.O_WRONLY|os.O_APPEND, 0666)
+	utils.ErrHadle(err)
+	fi.Write([]byte(bf.String()))
+	defer fi.Close()
 }
 
 // Clear the map,
@@ -76,7 +79,7 @@ func (c *ConfigMap) Refresh() {
 // Read config file to struct
 func (c *ConfigMap) readConfig() {
 	path := c.configPath
-	fi, err := os.Open(filepath.Join(path))
+	fi, err := os.Open(path)
 	utils.ErrHadle(err)
 	defer fi.Close()
 	br := bufio.NewReader(fi)
@@ -99,13 +102,24 @@ func (c *ConfigMap) readConfig() {
 
 // Initial the config path.
 func (c *ConfigMap) Init(path string) {
-	if path == "" {
-		cwd := utils.GetCwd()
-		path = filepath.Join(cwd, DefaultConfPath)
+	if !filepath.IsAbs(path) {
+		path = filepath.Join(utils.GetCwd(), path)
 	}
 
 	c.configPath = path
-	c.readConfig()
+
+	_, err := os.Stat(path)
+	if err != nil {
+		if os.IsNotExist(err) {
+			newFile, err := os.Create(path)
+			if err != nil {
+				log.Fatal(err)
+			}
+			newFile.Close()
+		} else {
+			c.readConfig()
+		}
+	}
 }
 
 // Export config map.

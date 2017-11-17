@@ -52,7 +52,7 @@ func run(cmd string) *Output {
 }
 
 // processCmdStr will split full command string to command and arguments slice
-func processCmdStr(cmd string) (cmdName string, cmdArgs []string) {
+func processCmdStr(cmd string) (string, []string) {
 	cmdParts := strings.Split(cmd, " ")
 	return cmdParts[0], cmdParts[1:]
 }

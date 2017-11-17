@@ -8,6 +8,8 @@ import (
 	"io"
 	"net/http"
 	"regexp"
+	"qiniupkg.com/x/errors.v7"
+	"fmt"
 )
 
 const (
@@ -29,13 +31,17 @@ func main() {
 
 	// Get config instance.
 	c := config.InitConfig(filePath)
-	cmd, para := utils.Analysis(command)
-	if cmd != "" && para != "" {
-		c.Set(cmd, para)
-	}
 
 	router(c)
-	http.ListenAndServe(defaultPort, nil)
+
+	if command == "" {
+		http.ListenAndServe(defaultPort, nil)
+	} else {
+		cmd, para := utils.Analysis(command)
+		if cmd != "" && para != "" {
+			c.Set(cmd, para)
+		}
+	}
 }
 
 // Router for actions.
@@ -81,6 +87,7 @@ func execCmds(in string) string {
 	output := exec.Series(in)
 	a := string((*output[0]).Stdout)
 	e := (*output[0]).Stderr
+	fmt.Println(errors.New(fmt.Sprintf(" \"%v\"\n", e)))
 	utils.ErrHadle(e)
 	if a == "" {
 		a = "Task done."

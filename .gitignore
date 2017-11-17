@@ -18,3 +18,5 @@ __*
 
 webhook*
 token.go
+.webhook.conf
+test.sh
