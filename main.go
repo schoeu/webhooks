@@ -5,16 +5,16 @@ import (
 	"./exec"
 	"./utils"
 	"flag"
+	"fmt"
 	"io"
 	"net/http"
 	"regexp"
-	"qiniupkg.com/x/errors.v7"
-	"fmt"
+	"strings"
 )
 
 const (
 	defaultConfPath = ".webhook.conf"
-	defaultPort     = ":8910"
+	defaultPort     = "8910"
 )
 
 func main() {
@@ -35,7 +35,9 @@ func main() {
 	router(c)
 
 	if command == "" {
-		http.ListenAndServe(defaultPort, nil)
+		// Get command from configuration.
+		c.Refresh()
+		http.ListenAndServe(":"+port, nil)
 	} else {
 		cmd, para := utils.Analysis(command)
 		if cmd != "" && para != "" {
@@ -50,6 +52,11 @@ func router(c config.ConfigMap) {
 	cmdReg := regexp.MustCompile("/run/(.+)$")
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		path := r.URL.Path
+
+		if path == "/" {
+			io.WriteString(w, "Server is ready.")
+			return
+		}
 
 		runInfo := cmdReg.FindAllStringSubmatch(path, -1)
 		var action, runCmd string
@@ -84,13 +91,14 @@ func router(c config.ConfigMap) {
 
 // Exec command.
 func execCmds(in string) string {
-	output := exec.Series(in)
+	output := exec.Series(strings.TrimSpace(in))
 	a := string((*output[0]).Stdout)
 	e := (*output[0]).Stderr
-	fmt.Println(errors.New(fmt.Sprintf(" \"%v\"\n", e)))
-	utils.ErrHadle(e)
 	if a == "" {
 		a = "Task done."
+	}
+	if e != nil {
+		a = fmt.Sprintf(" \"%v\"\n", e)
 	}
 	return a
 }

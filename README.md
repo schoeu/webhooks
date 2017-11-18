@@ -1,9 +1,9 @@
-# webhook
+# webhookss
 Web hook to exec command.
 
 ## What
 
-webhook is a simple tool wriiten in go. It can executing remote commands over the web hook.
+webhooks is a simple tool wriiten in go. It can executing remote commands over the web hook.
 
 Very easy to use.
 
@@ -19,13 +19,13 @@ Choose the version of your computer system and download it, then copy to the ser
 ```
 # 'test_router' is url router to execute the command which followed it.
 # 'echo 1' is command to be executed
-./webhook -add "test_router:echo 1"
+./webhooks -add "test_router:echo 1"
 
 ```
 
 or
 
-### Create new config file, content like this.
+### Create new configuration
 
 ```
 # Now you can request `http://your_server_host_name:8910/test1` to execute the command `echo 123`.
@@ -39,7 +39,7 @@ then
 ```
 # Start the server
 # Default port is 8910
-./webhook
+./webhooks
 ```
 
 
