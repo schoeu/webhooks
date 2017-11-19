@@ -2,4 +2,8 @@ language: go
 
 go:
     - 1.x
-    - tip
+    - master
+env:
+  global:
+    - GOARCH=amd64
+script: go test ./utils
