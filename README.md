@@ -37,27 +37,28 @@ Just request url `http://your_server_host_name:your_port/run/your_command`
 
 ### Examples
 
-Get run path:
+- Get run path:
 
-request `http://localhost:8910/run/pwd`
+ - request `http://localhost:8910/run/pwd`
 
-Get some file list:
+- Get some file list:
 
-request `http://localhost:8910/run/ls`
+ - request `http://localhost:8910/run/ls`
 
-Also you can get text type file content:
+- Also you can get text type file content:
 
-request:
+ - request:
+    ```
+    http://localhost:8910/run/cat test.txt
 
-`http://localhost:8910/run/cat test.txt`
+    or
 
-or
+    http://localhost:8910/run/cat test.pdf
 
-`http://localhost:8910/run/cat test.pdf`
+    or
 
-or
-
-`http://localhost:8910/run/cat test.jpg`
+    http://localhost:8910/run/cat test.jpg
+    ```
 
 and so on ...
 
@@ -127,8 +128,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
-
-
-
-
