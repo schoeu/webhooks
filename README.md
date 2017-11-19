@@ -39,15 +39,15 @@ Just request url `http://your_server_host_name:your_port/run/your_command`
 
 - Get run path:
 
- - request `http://localhost:8910/run/pwd`
+    - request `http://localhost:8910/run/pwd`
 
 - Get some file list:
 
- - request `http://localhost:8910/run/ls`
+    - request `http://localhost:8910/run/ls`
 
 - Also you can get text type file content:
 
- - request:
+    - request:
     ```
     http://localhost:8910/run/cat test.txt
 
