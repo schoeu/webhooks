@@ -1,4 +1,4 @@
-# webhookss
+# Webhooks
 Web hook to exec command.
 
 ## What`s it

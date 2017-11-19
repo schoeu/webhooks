@@ -1,8 +1,8 @@
 package utils
 
 import (
-	"../exec"
 	"fmt"
+	"github.com/schoeu/webhooks/exec"
 	"log"
 	"net/http"
 	"net/url"

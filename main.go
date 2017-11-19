@@ -1,10 +1,10 @@
 package main
 
 import (
-	"./config"
-	"./routers"
-	"./utils"
 	"flag"
+	"github.com/schoeu/webhooks/config"
+	"github.com/schoeu/webhooks/routers"
+	"github.com/schoeu/webhooks/utils"
 	"io"
 	"net/http"
 	"regexp"

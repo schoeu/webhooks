@@ -1,8 +1,8 @@
 package routers
 
 import (
-	"../config"
-	"../utils"
+	"github.com/schoeu/webhooks/config"
+	"github.com/schoeu/webhooks/utils"
 	"io"
 	"net/http"
 )

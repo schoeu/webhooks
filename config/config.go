@@ -1,9 +1,9 @@
 package config
 
 import (
-	"../utils"
 	"bufio"
 	"bytes"
+	"github.com/schoeu/webhooks/utils"
 	"io"
 	"log"
 	"os"
