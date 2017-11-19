@@ -8,14 +8,14 @@ Web hook to exec command.
 
 ## What`s it
 
-Webhooks is a simple tool wriiten in go. It can executing remote commands over the web hook, and very easy to use.
+Webhooks is a simple tool wriiten in golang. It can executing remote commands over the web hook, also very easy to use.
 
 
 ## Getting started
 
 ### Download
 
-Choose the version of your computer system and download it, then copy to the server client which you want to control.
+Choose the version of your computer system and download it, then copy it to the server which you want to control.
 
 - [linux-32bit](http://ozo2fe2cm.bkt.clouddn.com/webhook_linux32bit)
 - [linux-64bit](http://ozo2fe2cm.bkt.clouddn.com/webhook_linux64bit)
@@ -23,13 +23,53 @@ Choose the version of your computer system and download it, then copy to the ser
 - [windows-32bit](http://ozo2fe2cm.bkt.clouddn.com/webhook_32bit.exe)
 - [windows-64bit](http://ozo2fe2cm.bkt.clouddn.com/webhook_64bit.exe)
 
+## Help
+
+Run `./webhooks --help` command you can get full information for use the webhooks.
+
+```
+./webhooks --help
+```
+
+## Command mode
+
+Just request url `http://your_server_host_name:your_port/run/your_command`
+
+### Examples
+
+Get run path:
+
+request `http://localhost:8910/run/pwd`
+
+Get some file list:
+
+request `http://localhost:8910/run/ls`
+
+Also you can get text type file content:
+
+request:
+
+`http://localhost:8910/run/cat test.txt`
+
+or
+
+`http://localhost:8910/run/cat test.pdf`
+
+or
+
+`http://localhost:8910/run/cat test.jpg`
+
+and so on ...
+
+
+## Tasks mode
+
 ### Add configuration
 
 ```
-# 'test_router' is url router to execute the command which followed it.
-# 'echo 1' is command to be executed
+# 'test_router' is router to execute the command which followed it.
+# 'echo 1' is the command to be executed
 ./webhooks -add "test_router:echo 1"
-
 ```
 
 Or
@@ -37,10 +77,9 @@ Or
 ### Create new configuration
 
 ```
-# Now you can request `http://your_server_host_name:8910/test1` to execute the command `echo 123`.
+# Now you can request `http://your_server_host_name:8910/tasks/test1` to execute the command `echo 123`.
 test1:echo 123
 runtask:sh builder.sh
-
 ```
 
 Then
@@ -52,7 +91,6 @@ Then
 
 # If you want to change port follow this:
 ./webhooks --port 8911
-
 ```
 
 
@@ -63,18 +101,9 @@ Webhooks can run script on your server, it must be run after some inspection. So
 ```
 # Run server with token.
 ./webhooks --token your_token
-
 ```
 Then you can request url `http://youdomain:port/run/some_script?token=your_token` to run your script.
 
-
-## Help
-
-Run `./webhooks --help` command you can get full information for use the webhooks.
-
-```
-./webhooks --help
-```
 
 
 ## MIT License
