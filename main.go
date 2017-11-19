@@ -2,14 +2,12 @@ package main
 
 import (
 	"./config"
-	"./exec"
+	"./routers"
 	"./utils"
 	"flag"
-	"fmt"
 	"io"
 	"net/http"
 	"regexp"
-	"strings"
 )
 
 const (
@@ -18,11 +16,12 @@ const (
 )
 
 func main() {
-	var filePath, helper, port, command string
+	var filePath, helper, port, command, token string
 	flag.StringVar(&filePath, "path", defaultConfPath, "path of config file.")
 	flag.StringVar(&port, "port", defaultPort, "server port.")
 	flag.StringVar(&helper, "help", "", "help")
 	flag.StringVar(&command, "add", "", "add router and command.")
+	flag.StringVar(&token, "token", "", "token for request")
 
 	flag.Parse()
 
@@ -32,7 +31,7 @@ func main() {
 	// Get config instance.
 	c := config.InitConfig(filePath)
 
-	router(c)
+	router(c, token)
 
 	if command == "" {
 		// Get command from configuration.
@@ -47,7 +46,7 @@ func main() {
 }
 
 // Router for actions.
-func router(c config.ConfigMap) {
+func router(c config.ConfigMap, token string) {
 	urlReg := regexp.MustCompile("/tasks/(\\w+)$")
 	cmdReg := regexp.MustCompile("/run/(.+)$")
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
@@ -58,47 +57,31 @@ func router(c config.ConfigMap) {
 			return
 		}
 
+		// Token check.
+		if token != "" {
+			valid := utils.CheckToken(r, token)
+			if !valid {
+				io.WriteString(w, "Wrong token.")
+				return
+			}
+		}
+
 		runInfo := cmdReg.FindAllStringSubmatch(path, -1)
-		var action, runCmd string
+		taskInfo := urlReg.FindAllStringSubmatch(path, -1)
+
 		hit := false
 
 		if len(runInfo) > 0 && len(runInfo[0]) > 0 {
-			runCmd = runInfo[0][1]
-			//o := execCmd(runCmd, "run")
-			rs := execCmds(runCmd)
-			hit = true
-			io.WriteString(w, rs)
+			routers.RunRouter(w, runInfo)
 			return
 		}
 
-		info := urlReg.FindAllStringSubmatch(path, -1)
-		if len(info) > 0 && len(info[0]) > 0 {
-			action = info[0][1]
+		if len(taskInfo) > 0 && len(taskInfo[0]) > 0 {
+			hit = routers.TaskRouter(w, taskInfo, c)
 		}
-		allActions := c.GetAll()
-		for k, v := range allActions {
-			if k == action {
-				rs := execCmds(v)
-				hit = true
-				io.WriteString(w, rs)
-			}
-		}
+
 		if !hit {
 			io.WriteString(w, "No action for this router")
 		}
 	})
-}
-
-// Exec command.
-func execCmds(in string) string {
-	output := exec.Series(strings.TrimSpace(in))
-	a := string((*output[0]).Stdout)
-	e := (*output[0]).Stderr
-	if a == "" {
-		a = "Task done."
-	}
-	if e != nil {
-		a = fmt.Sprintf(" \"%v\"\n", e)
-	}
-	return a
 }

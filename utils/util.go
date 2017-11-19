@@ -1,7 +1,11 @@
 package utils
 
 import (
+	"../exec"
+	"fmt"
 	"log"
+	"net/http"
+	"net/url"
 	"os"
 	"strings"
 )
@@ -54,12 +58,26 @@ func Analysis(s string) (string, string) {
 	return cmds[0], cmds[1]
 }
 
-func RunCmdAnalysis(s string) (string, string) {
-	cmds := strings.Split(s, " ")
-	return cmds[0], strings.Join(cmds[1:], " ")
+// Token checker
+func CheckToken(r *http.Request, token string) bool {
+	u, err := url.ParseQuery(r.URL.RawQuery)
+	ErrHadle(err)
+	if u.Get("token") == token {
+		return true
+	}
+	return false
 }
 
-func CmdFilter(c string) string {
-	rs := strings.Replace(c, "sh ", "", -1)
-	return rs
+// Exec command.
+func ExecCmds(in string) string {
+	output := exec.Series(strings.TrimSpace(in))
+	a := string((*output[0]).Stdout)
+	e := (*output[0]).Stderr
+	if a == "" {
+		a = "Task done."
+	}
+	if e != nil {
+		a = fmt.Sprintf(" \"%v\"\n", e)
+	}
+	return a
 }
