@@ -2,7 +2,6 @@ language: go
 
 go:
     - 1.x
-    - master
 env:
   global:
     - GOARCH=amd64

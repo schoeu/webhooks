@@ -1,6 +1,11 @@
 # Webhooks
 Web hook to exec command.
 
+[![Build Status](https://travis-ci.org/schoeu/webhooks.svg?branch=master)](https://travis-ci.org/schoeu/webhooks)
+[![Go Report Card](https://goreportcard.com/badge/github.com/schoeu/webhooks)](https://goreportcard.com/report/github.com/schoeu/webhooks)
+[![GoDoc](https://godoc.org/github.com/schoeu/webhooks?status.svg)](https://godoc.org/github.com/schoeu/webhooks)
+
+
 ## What`s it
 
 Webhooks is a simple tool wriiten in go. It can executing remote commands over the web hook, and very easy to use.
