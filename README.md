@@ -1,11 +1,9 @@
 # webhookss
 Web hook to exec command.
 
-## What
+## What`s it
 
-webhooks is a simple tool wriiten in go. It can executing remote commands over the web hook.
-
-Very easy to use.
+Webhooks is a simple tool wriiten in go. It can executing remote commands over the web hook, and very easy to use.
 
 
 ## Getting started
@@ -23,7 +21,7 @@ Choose the version of your computer system and download it, then copy to the ser
 
 ```
 
-or
+Or
 
 ### Create new configuration
 
@@ -34,12 +32,37 @@ runtask:sh builder.sh
 
 ```
 
-then
+Then
 
 ```
 # Start the server
 # Default port is 8910
 ./webhooks
+
+# If you want to change port follow this:
+./webhooks --port 8911
+
+```
+
+
+## Token
+
+Webhooks can run script on your server, it must be run after some inspection. So we can go through with token...
+
+```
+# Run server with token.
+./webhooks --token your_token
+
+```
+Then you can request url `http://youdomain:port/run/some_script?token=your_token` to run your script.
+
+
+## Help
+
+Run `./webhooks --help` command you can get full information for use the webhooks.
+
+```
+./webhooks --help
 ```
 
 
