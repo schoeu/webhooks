@@ -11,13 +11,13 @@ import (
 	"strings"
 )
 
-type configMap struct {
+type ConfigMap struct {
 	value      map[string]string
 	configPath string
 }
 
 // Set a key, value to map.
-func (c *configMap) Set(k string, v string) {
+func (c *ConfigMap) Set(k string, v string) {
 	if c.value[k] == "" && k != "" {
 		c.value[k] = v
 	}
@@ -26,17 +26,17 @@ func (c *configMap) Set(k string, v string) {
 }
 
 // Get value from configMap by key.
-func (c *configMap) Get(k string) string {
+func (c *ConfigMap) Get(k string) string {
 	return c.value[k]
 }
 
 // Return config map.
-func (c *configMap) GetAll() map[string]string {
+func (c *ConfigMap) GetAll() map[string]string {
 	return c.value
 }
 
 // Store data to local file.
-func (c *configMap) Store() {
+func (c *ConfigMap) Store() {
 	var bf bytes.Buffer
 	for k, v := range c.value {
 		if k != "" {
@@ -58,7 +58,7 @@ func (c *configMap) Store() {
 
 // Clear the map,
 // just clear the object， not the config file content.
-func (c *configMap) Clear() {
+func (c *ConfigMap) Clear() {
 	for k, _ := range c.value {
 		delete(c.value, k)
 	}
@@ -66,13 +66,13 @@ func (c *configMap) Clear() {
 
 // Refresh config map data.
 // Get newer data to configMap
-func (c *configMap) Refresh() {
+func (c *ConfigMap) Refresh() {
 	// TODO: other process.
 	c.readConfig()
 }
 
 // Read config file to struct
-func (c *configMap) readConfig() {
+func (c *ConfigMap) readConfig() {
 	path := c.configPath
 	fi, err := os.Open(path)
 	utils.ErrHadle(err)
@@ -96,7 +96,7 @@ func (c *configMap) readConfig() {
 }
 
 // Initial the config path.
-func (c *configMap) Init(path string) {
+func (c *ConfigMap) Init(path string) {
 	if !filepath.IsAbs(path) {
 		path = filepath.Join(utils.GetCwd(), path)
 	}
@@ -118,8 +118,8 @@ func (c *configMap) Init(path string) {
 }
 
 // Export config map.
-func InitConfig(path string) configMap {
-	c := configMap{}
+func InitConfig(path string) ConfigMap {
+	c := ConfigMap{}
 	c.value = map[string]string{}
 	c.Init(path)
 	return c
