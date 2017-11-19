@@ -37,17 +37,16 @@ Just request url `http://your_server_host_name:your_port/run/your_command`
 
 ### Examples
 
-- Get run path:
+- Get runtime path you can request:
 
-    - request `http://localhost:8910/run/pwd`
+    - `http://localhost:8910/run/pwd`
 
-- Get some file list:
+- Get some file list you can request:
 
-    - request `http://localhost:8910/run/ls`
+    - `http://localhost:8910/run/ls`
 
-- Also you can get text type file content:
+- Also you can get text type file content please request:
 
-    - request:
     ```
     http://localhost:8910/run/cat test.txt
 
