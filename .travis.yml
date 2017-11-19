@@ -8,4 +8,5 @@ env:
     - GOARCH=amd64
     - GO_FOR_RELEASE=1.9
     - IMAGE_NAME=tsuru/api
-script: go test ./utils
+script:
+    - go test ./utils
