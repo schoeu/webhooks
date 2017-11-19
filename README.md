@@ -17,6 +17,12 @@ Webhooks is a simple tool wriiten in go. It can executing remote commands over t
 
 Choose the version of your computer system and download it, then copy to the server client which you want to control.
 
+- [linux-32bit](http://ozo2fe2cm.bkt.clouddn.com/webhook_linux32bit)
+- [linux-64bit](http://ozo2fe2cm.bkt.clouddn.com/webhook_linux64bit)
+- [MAC](http://ozo2fe2cm.bkt.clouddn.com/webhook_mac)
+- [windows-32bit](http://ozo2fe2cm.bkt.clouddn.com/webhook_32bit.exe)
+- [windows-64bit](http://ozo2fe2cm.bkt.clouddn.com/webhook_64bit.exe)
+
 ### Add configuration
 
 ```

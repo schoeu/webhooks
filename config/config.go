@@ -11,17 +11,13 @@ import (
 	"strings"
 )
 
-type ConfigMap struct {
+type configMap struct {
 	value      map[string]string
 	configPath string
 }
 
-var (
-	DefaultConfPath = ".executor.conf"
-)
-
 // Set a key, value to map.
-func (c *ConfigMap) Set(k string, v string) {
+func (c *configMap) Set(k string, v string) {
 	if c.value[k] == "" && k != "" {
 		c.value[k] = v
 	}
@@ -29,18 +25,18 @@ func (c *ConfigMap) Set(k string, v string) {
 	c.Store()
 }
 
-// Get value from ConfigMap by key.
-func (c *ConfigMap) Get(k string) string {
+// Get value from configMap by key.
+func (c *configMap) Get(k string) string {
 	return c.value[k]
 }
 
 // Return config map.
-func (c *ConfigMap) GetAll() map[string]string {
+func (c *configMap) GetAll() map[string]string {
 	return c.value
 }
 
 // Store data to local file.
-func (c *ConfigMap) Store() {
+func (c *configMap) Store() {
 	var bf bytes.Buffer
 	for k, v := range c.value {
 		if k != "" {
@@ -62,21 +58,21 @@ func (c *ConfigMap) Store() {
 
 // Clear the map,
 // just clear the object， not the config file content.
-func (c *ConfigMap) Clear() {
+func (c *configMap) Clear() {
 	for k, _ := range c.value {
 		delete(c.value, k)
 	}
 }
 
 // Refresh config map data.
-// Get newer data to ConfigMap
-func (c *ConfigMap) Refresh() {
+// Get newer data to configMap
+func (c *configMap) Refresh() {
 	// TODO: other process.
 	c.readConfig()
 }
 
 // Read config file to struct
-func (c *ConfigMap) readConfig() {
+func (c *configMap) readConfig() {
 	path := c.configPath
 	fi, err := os.Open(path)
 	utils.ErrHadle(err)
@@ -100,7 +96,7 @@ func (c *ConfigMap) readConfig() {
 }
 
 // Initial the config path.
-func (c *ConfigMap) Init(path string) {
+func (c *configMap) Init(path string) {
 	if !filepath.IsAbs(path) {
 		path = filepath.Join(utils.GetCwd(), path)
 	}
@@ -122,8 +118,8 @@ func (c *ConfigMap) Init(path string) {
 }
 
 // Export config map.
-func InitConfig(path string) ConfigMap {
-	c := ConfigMap{}
+func InitConfig(path string) configMap {
+	c := configMap{}
 	c.value = map[string]string{}
 	c.Init(path)
 	return c
