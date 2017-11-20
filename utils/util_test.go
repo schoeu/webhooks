@@ -1,8 +1,8 @@
 package utils
 
 import (
-	"testing"
 	"strings"
+	"testing"
 )
 
 func TestGetCwd(t *testing.T) {
@@ -50,6 +50,6 @@ func TestExecCmds(t *testing.T) {
 	c := "echo " + str
 	rs := ExecCmds(c)
 	if strings.TrimSpace(rs) != str {
-		t.Errorf("got [%s] expected [%s]",str, rs)
+		t.Errorf("got [%s] expected [%s]", str, rs)
 	}
 }

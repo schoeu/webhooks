@@ -70,9 +70,9 @@ func CheckToken(r *http.Request, token string) bool {
 
 // Exec command.
 func ExecCmds(in string) string {
-	output := exec.Series(strings.TrimSpace(in))
-	a := string((*output[0]).Stdout)
-	e := (*output[0]).Stderr
+	output := exec.Run(strings.TrimSpace(in))
+	a := string((*output).Stdout)
+	e := (*output).Stderr
 	if a == "" {
 		a = "Task done."
 	}
