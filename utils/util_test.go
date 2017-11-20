@@ -2,7 +2,6 @@ package utils
 
 import (
 	"testing"
-	"fmt"
 	"strings"
 )
 
@@ -47,10 +46,10 @@ func TestAnalysis(t *testing.T) {
 }
 
 func TestExecCmds(t *testing.T) {
-	c := "echo 123"
+	str := "123"
+	c := "echo " + str
 	rs := ExecCmds(c)
-	fmt.Print(rs)
-	if strings.TrimSpace(rs) != "123" {
-		t.Errorf("got 123 expected [%s]", rs)
+	if strings.TrimSpace(rs) != str {
+		t.Errorf("got [%s] expected [%s]",str, rs)
 	}
 }
