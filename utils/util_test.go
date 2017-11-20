@@ -2,6 +2,8 @@ package utils
 
 import (
 	"testing"
+	"fmt"
+	"strings"
 )
 
 func TestGetCwd(t *testing.T) {
@@ -27,5 +29,28 @@ func TestValidCmd(t *testing.T) {
 
 	if c != param {
 		t.Errorf("got [%s] expected [%s]", c, param)
+	}
+}
+
+func TestAnalysis(t *testing.T) {
+	command := "router"
+	param := "sh ./builder"
+	cmdStr := command + ":" + param
+	r, c := Analysis(cmdStr)
+	if r != command {
+		t.Errorf("got [%s] expected [%s]", r, command)
+	}
+
+	if c != param {
+		t.Errorf("got [%s] expected [%s]", c, param)
+	}
+}
+
+func TestExecCmds(t *testing.T) {
+	c := "echo 123"
+	rs := ExecCmds(c)
+	fmt.Print(rs)
+	if strings.TrimSpace(rs) != "123" {
+		t.Errorf("got 123 expected [%s]", rs)
 	}
 }
