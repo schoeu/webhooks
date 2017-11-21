@@ -8,6 +8,8 @@ import (
 	"io"
 	"net/http"
 	"regexp"
+	"os"
+	"strings"
 )
 
 const (
@@ -30,6 +32,13 @@ func main() {
 
 	// Get config instance.
 	c := config.InitConfig(filePath)
+
+	// Add restart command to refresh configuration
+	args := os.Args
+	if len(args) > 1 && args[1] == "restart" {
+		c.Refresh()
+		return
+	}
 
 	router(c, token)
 
