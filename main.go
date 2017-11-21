@@ -2,13 +2,14 @@ package main
 
 import (
 	"flag"
-	"github.com/schoeu/webhooks/config"
-	"github.com/schoeu/webhooks/routers"
-	"github.com/schoeu/webhooks/utils"
 	"io"
 	"net/http"
 	"regexp"
 	"os"
+
+	"github.com/schoeu/webhooks/config"
+	"github.com/schoeu/webhooks/routers"
+	"github.com/schoeu/webhooks/utils"
 )
 
 const (

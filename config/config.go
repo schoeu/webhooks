@@ -3,12 +3,13 @@ package config
 import (
 	"bufio"
 	"bytes"
-	"github.com/schoeu/webhooks/utils"
 	"io"
 	"log"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/schoeu/webhooks/utils"
 )
 
 type ConfigMap struct {

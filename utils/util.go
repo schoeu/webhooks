@@ -2,12 +2,13 @@ package utils
 
 import (
 	"fmt"
-	"github.com/schoeu/webhooks/exec"
 	"log"
 	"net/http"
 	"net/url"
 	"os"
 	"strings"
+
+	"github.com/schoeu/webhooks/exec"
 )
 
 // Get run time cwd
