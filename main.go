@@ -9,7 +9,6 @@ import (
 	"net/http"
 	"regexp"
 	"os"
-	"strings"
 )
 
 const (
