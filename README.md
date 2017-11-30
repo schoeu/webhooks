@@ -105,6 +105,14 @@ Webhooks can run script on your server, it must be run after some inspection. So
 Then you can request url `http://youdomain:port/run/some_script?token=your_token` to run your script.
 
 
+## Return json
+You only need to take the `json` parameter in the request url.
+Such as:
+
+```
+http://youdomain:port/run/some_script?token=your_token&json=1
+```
+
 
 ## MIT License
 
