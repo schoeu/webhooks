@@ -4,8 +4,9 @@ import (
 	"flag"
 	"io"
 	"net/http"
-	"regexp"
+	"net/url"
 	"os"
+	"regexp"
 
 	"github.com/schoeu/webhooks/config"
 	"github.com/schoeu/webhooks/routers"
@@ -55,10 +56,17 @@ func main() {
 }
 
 // Router for actions.
-func router(c config.ConfigMap, token string) {
+func router(cf config.ConfigMap, token string) {
 	urlReg := regexp.MustCompile("/tasks/(\\w+)$")
 	cmdReg := regexp.MustCompile("/run/(.+)$")
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		c := utils.Context{}
+		c.Request = r
+		c.Writer = w
+		u, err := url.ParseQuery(r.URL.RawQuery)
+		utils.ErrHadle(err)
+		c.Query = u
+
 		path := r.URL.Path
 
 		if path == "/" {
@@ -68,8 +76,7 @@ func router(c config.ConfigMap, token string) {
 
 		// Token check.
 		if token != "" {
-			valid := utils.CheckToken(r, token)
-			if !valid {
+			if u.Get("token") != token {
 				io.WriteString(w, "Wrong token.")
 				return
 			}
@@ -81,12 +88,12 @@ func router(c config.ConfigMap, token string) {
 		hit := false
 
 		if len(runInfo) > 0 && len(runInfo[0]) > 0 {
-			routers.RunRouter(w, runInfo)
+			routers.RunRouter(c, runInfo)
 			return
 		}
 
 		if len(taskInfo) > 0 && len(taskInfo[0]) > 0 {
-			hit = routers.TaskRouter(w, taskInfo, c)
+			hit = routers.TaskRouter(c, taskInfo, cf)
 		}
 
 		if !hit {

@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -10,6 +11,17 @@ import (
 
 	"github.com/schoeu/webhooks/exec"
 )
+
+type jsonStr struct {
+	Data   string `json:"data"`
+	Status int    `json:"status"`
+}
+
+type Context struct {
+	Writer  http.ResponseWriter
+	Request *http.Request
+	Query   url.Values
+}
 
 // Get run time cwd
 func GetCwd() string {
@@ -23,7 +35,7 @@ func GetCwd() string {
 // Error handler
 func ErrHadle(err error) {
 	if err != nil {
-		log.Fatal(err)
+		fmt.Println(err)
 	}
 }
 
@@ -36,6 +48,19 @@ func CleanTmp(p string) {
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+// Return json
+func ReturnJson(w http.ResponseWriter, content string) {
+	rs := jsonStr{}
+	rs.Data = content
+	rs.Status = 0
+	js, err := json.Marshal(rs)
+	if err != nil {
+		rs.Status = 1
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(js)
 }
 
 // Check command
@@ -57,16 +82,6 @@ func Analysis(s string) (string, string) {
 		return router, cmd
 	}
 	return cmds[0], cmds[1]
-}
-
-// Token checker
-func CheckToken(r *http.Request, token string) bool {
-	u, err := url.ParseQuery(r.URL.RawQuery)
-	ErrHadle(err)
-	if u.Get("token") == token {
-		return true
-	}
-	return false
 }
 
 // Exec command.

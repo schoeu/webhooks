@@ -2,8 +2,8 @@ package exec
 
 import (
 	"os/exec"
-	"strings"
 	"path/filepath"
+	"strings"
 )
 
 // Output is the struct that hold a command's output
