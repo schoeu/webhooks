@@ -44,7 +44,7 @@ func execute(c string, args ...string) ([]byte, error) {
 			curDir = filepath.Join(curDir, p)
 		}
 		// After change direction should show the file list.
-		cmd = exec.Command("ls", args...)
+		cmd = exec.Command("ls", curDir)
 	}
 	cmd.Dir = curDir
 
