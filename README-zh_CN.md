@@ -24,21 +24,34 @@ Webhooks是一个用`go`语言实现的可以在web端执行机器命令的工�
 - [windows64系统](http://ozo2fe2cm.bkt.clouddn.com/webhook_64bit.exe)
 
 
-下载后，在*nux机器中对应目录中执行 `./web`
+下载后
 
+在*nix机器中对应目录中执行`./webhook_xxx`即可，执行之前可能需要用一下命令授权：
+```
+chmod -x ./webhook_xxx
+```
+在windows机器，双击执行，或者在CMD中找到`webhook.exe`执行文件，然后执行
+```
+webhook.exe
+```
 
 
 ## 帮助
 
-执行 `./webhooks --help` 就可以获得该工具的详细帮助信息。
+执行以下就可以获得该工具的详细帮助信息。
 
 ```
 ./webhooks --help
 ```
 
+例子： 假如在`123.123.123.123`机器中下载，启动了webhooks服务，那么就可以访问`http://123.123.123.123:8910/`来访问服务。
+
+访问的格式为： ``http://ip:port/[run|tasks]/command[?token=some_token][&json=1]`
+
+
 ## 命令模式
 
-直接访问 `http://你的机器host:端口/run/你要执行的命令`
+直接访问 `http://机器host:端口/run/你要执行的命令`
 
 ### 示例
 以linux机器为例
@@ -99,7 +112,7 @@ runtask:sh builder.sh
 
 ```
 
-Then
+之后
 
 ```
 # 启动服务
