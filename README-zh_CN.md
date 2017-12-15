@@ -1,5 +1,6 @@
 # Webhooks
-Web hook to exec command.
+
+> 使用web访问来执行机器命令，触发任务等。
 
 [![Build Status](https://travis-ci.org/schoeu/webhooks.svg?branch=master)](https://travis-ci.org/schoeu/webhooks)
 [![Go Report Card](https://goreportcard.com/badge/github.com/schoeu/webhooks)](https://goreportcard.com/report/github.com/schoeu/webhooks)
@@ -8,7 +9,7 @@ Web hook to exec command.
 
 ## 简介
 
-Webhooks是一个用`go`语言实现的可以在web端执行机器命令的工具，通常用来做webhook，而且非常的简单易用。
+Webhooks是一个用`go`语言实现的可以在web端执行机器命令的工具，工具非常的简单易用。通常用来做任务触发，机器自动化维护等需求。
 
 
 ## 开始
