@@ -33,6 +33,7 @@ func (c *ConfigMap) Get(k string) string {
 
 // Return config map.
 func (c *ConfigMap) GetAll() map[string]string {
+	c.readConfig()
 	return c.value
 }
 
