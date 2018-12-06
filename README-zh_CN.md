@@ -18,11 +18,11 @@ Webhooks是一个用`go`语言实现的可以在web端执行机器命令的工�
 
 选择一个对应的系统版本，下载到你想执行命令的机器。
 
-- [linux32位系统](http://weather.schoeu.com/webhook_linux_32bit)
-- [linux64位系统](http://weather.schoeu.com/webhook_linux_64bit)
-- [MAC系统](http://weather.schoeu.com/webhook_mac)
-- [windows32系统](http://weather.schoeu.com/webhook_32bit.exe)
-- [windows64系统](http://weather.schoeu.com/webhook_64bit.exe)
+- [linux32位系统](http://qiniucdn.schoeu.com/webhook_linux_32bit)
+- [linux64位系统](http://qiniucdn.schoeu.com/webhook_linux_64bit)
+- [MAC系统](http://qiniucdn.schoeu.com/webhook_mac)
+- [windows32系统](http://qiniucdn.schoeu.com/webhook_32bit.exe)
+- [windows64系统](http://qiniucdn.schoeu.com/webhook_64bit.exe)
 
 
 下载后
