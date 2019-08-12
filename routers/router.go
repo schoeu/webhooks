@@ -22,15 +22,21 @@ func TaskRouter(ctx utils.Context, infos [][]string, c config.ConfigMap) bool {
 	allActions := c.GetAll()
 	cmdStr := allActions[action]
 	isJson := ctx.Query.Get("json") != ""
+	isAsync := ctx.Query.Get("async") != ""
 	if cmdStr != "" {
-		rs := utils.ExecCmds(cmdStr)
-		hit = true
+		var rs string
+		if isAsync {
+			go utils.ExecCmds(cmdStr)
+			rs = "done"
+		} else {
+			rs = utils.ExecCmds(cmdStr)
+		}
 		if isJson {
 			utils.ReturnJson(ctx.Writer, rs)
 		} else {
 			io.WriteString(ctx.Writer, rs)
 		}
-
+		hit = true
 	}
 	return hit
 }
