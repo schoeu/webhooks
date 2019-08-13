@@ -44,13 +44,20 @@ func TaskRouter(ctx utils.Context, infos [][]string, c config.ConfigMap) bool {
 // Action for run script.
 func RunRouter(ctx utils.Context, infos [][]string) {
 	runCmd := infos[0][1]
-	//o := execCmd(runCmd, "run")
-	rs := utils.ExecCmds(runCmd)
 	isJson := ctx.Query.Get("json") != ""
-	if isJson {
-		utils.ReturnJson(ctx.Writer, rs)
-	} else {
-		io.WriteString(ctx.Writer, rs)
+	isAsync := ctx.Query.Get("async") != ""
+	if runCmd != "" {
+		var rs string
+		if isAsync {
+			go utils.ExecCmds(runCmd)
+			rs = "done"
+		} else {
+			rs = utils.ExecCmds(runCmd)
+		}
+		if isJson {
+			utils.ReturnJson(ctx.Writer, rs)
+		} else {
+			io.WriteString(ctx.Writer, rs)
+		}
 	}
-
 }
