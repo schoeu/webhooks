@@ -18,11 +18,11 @@ Webhooks是一个用`go`语言实现的可以在web端执行机器命令的工�
 
 选择一个对应的系统版本，下载到你想执行命令的机器。
 
-- [linux32位系统](http://qiniucdn.schoeu.com/webhook_linux_32bit)
-- [linux64位系统](http://qiniucdn.schoeu.com/webhook_linux_64bit)
-- [MAC系统](http://qiniucdn.schoeu.com/webhook_mac)
-- [windows32系统](http://qiniucdn.schoeu.com/webhook_32bit.exe)
-- [windows64系统](http://qiniucdn.schoeu.com/webhook_64bit.exe)
+- [linux32位系统](https://github.com/schoeu/webhooks/raw/master/webhook_linux_32bit)
+- [linux64位系统](https://github.com/schoeu/webhooks/raw/master/webhook_linux_64bit)
+- [MAC系统](https://github.com/schoeu/webhooks/raw/master/webhook_mac)
+- [windows32系统](https://github.com/schoeu/webhooks/raw/master/webhook_32bit.exe)
+- [windows64系统](https://github.com/schoeu/webhooks/raw/master/webhook_64bit.exe)
 
 
 下载后
@@ -142,6 +142,9 @@ webhooks默认直接返回内容，如果想要返回json格式的内容，可�
 ```
 http://localhost:8910/run/指定命令?token=your_token&json=1
 ```
+
+## 异步执行
+在请求连接后加`async=1`参数即可异步执行，webhook不会等待执行结果返回，会直接返回`done`。
 
 
 ## MIT License

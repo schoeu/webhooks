@@ -19,11 +19,11 @@ Webhooks is a simple tool wriiten in golang. It can executing remote commands ov
 
 Choose the version of your computer system and download it, then copy it to the server which you want to control.
 
-- [linux-32bit](http://qiniucdn.schoeu.com/webhook_linux_32bit)
-- [linux-64bit](http://qiniucdn.schoeu.com/webhook_linux_64bit)
-- [MAC](http://qiniucdn.schoeu.com/webhook_mac)
-- [windows-32bit](http://qiniucdn.schoeu.com/webhook_32bit.exe)
-- [windows-64bit](http://qiniucdn.schoeu.com/webhook_64bit.exe)
+- [linux-32bit](https://github.com/schoeu/webhooks/raw/master/webhook_linux_32bit)
+- [linux-64bit](https://github.com/schoeu/webhooks/raw/master/webhook_linux_64bit)
+- [MAC](https://github.com/schoeu/webhooks/raw/master/webhook_mac)
+- [windows-32bit](https://github.com/schoeu/webhooks/raw/master/webhook_32bit.exe)
+- [windows-64bit](https://github.com/schoeu/webhooks/raw/master/webhook_64bit.exe)
 
 ## Help
 
@@ -115,6 +115,9 @@ Such as:
 http://youdomain:port/run/some_script?token=your_token&json=1
 ```
 
+## Async
+
+Add `async=1` to action url，webhooks will asynchronous return result.
 
 ## MIT License
 
