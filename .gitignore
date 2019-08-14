@@ -15,8 +15,3 @@
 
 .DS_Store
 __*
-
-webhook*
-token.go
-.webhook.conf
-test.sh
